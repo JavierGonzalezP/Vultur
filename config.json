@@ -1,0 +1,18 @@
+{
+    "C\u00e1mara1": {
+        "ExposureTime": 6363,
+        "Gain": 10.0,
+        "Width": 1280,
+        "Height": 720,
+        "PixelFormat": "Mono8",
+        "FrameRate": 5.0
+    },
+    "C\u00e1mara2": {
+        "ExposureTime": 5000,
+        "Gain": 10.0,
+        "Width": 1280,
+        "Height": 720,
+        "PixelFormat": "Mono8",
+        "FrameRate": 5.0
+    }
+}
