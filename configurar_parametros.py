@@ -44,74 +44,36 @@ config = cargar_configuracion()
 # Crear ventana
 root = tk.Tk()
 root.title("Configuración de Cámaras")
+root.geometry("480x300")  # Establece el tamaño de la ventana
+root.resizable(False, False)  # Evita que la ventana sea redimensionable
 
-# Cámara 1
-tk.Label(root, text="Cámara 1").grid(row=0, column=1)
-tk.Label(root, text="Exposure Time:").grid(row=1, column=0)
-entry_exposure1 = tk.Entry(root)
-entry_exposure1.grid(row=1, column=1)
-entry_exposure1.insert(0, config.get("Cámara1", {}).get("ExposureTime", ""))
+# Reorganizar la UI en una cuadrícula más compacta
+tk.Label(root, text="Cámara 1").grid(row=0, column=0, columnspan=2)
+tk.Label(root, text="Cámara 2").grid(row=0, column=2, columnspan=2)
 
-tk.Label(root, text="Gain:").grid(row=2, column=0)
-entry_gain1 = tk.Entry(root)
-entry_gain1.grid(row=2, column=1)
-entry_gain1.insert(0, config.get("Cámara1", {}).get("Gain", ""))
+parametros = ["Exposure Time", "Gain", "Width", "Height", "Pixel Format", "Frame Rate"]
+entries_c1 = []
+entries_c2 = []
 
-tk.Label(root, text="Width:").grid(row=3, column=0)
-entry_width1 = tk.Entry(root)
-entry_width1.grid(row=3, column=1)
-entry_width1.insert(0, config.get("Cámara1", {}).get("Width", ""))
+for i, param in enumerate(parametros):
+    tk.Label(root, text=f"{param}:").grid(row=i+1, column=0, sticky="e", padx=5, pady=2)
+    entry = tk.Entry(root, width=10)
+    entry.grid(row=i+1, column=1, padx=5, pady=2)
+    entry.insert(0, config.get("Cámara1", {}).get(param.replace(" ", ""), ""))
+    entries_c1.append(entry)
 
-tk.Label(root, text="Height:").grid(row=4, column=0)
-entry_height1 = tk.Entry(root)
-entry_height1.grid(row=4, column=1)
-entry_height1.insert(0, config.get("Cámara1", {}).get("Height", ""))
-
-tk.Label(root, text="Pixel Format:").grid(row=5, column=0)
-entry_pixel1 = tk.Entry(root)
-entry_pixel1.grid(row=5, column=1)
-entry_pixel1.insert(0, config.get("Cámara1", {}).get("PixelFormat", ""))
-
-tk.Label(root, text="Frame Rate:").grid(row=6, column=0)
-entry_fps1 = tk.Entry(root)
-entry_fps1.grid(row=6, column=1)
-entry_fps1.insert(0, config.get("Cámara1", {}).get("FrameRate", ""))
-
-# Cámara 2
-tk.Label(root, text="Cámara 2").grid(row=0, column=3)
-tk.Label(root, text="Exposure Time:").grid(row=1, column=2)
-entry_exposure2 = tk.Entry(root)
-entry_exposure2.grid(row=1, column=3)
-entry_exposure2.insert(0, config.get("Cámara2", {}).get("ExposureTime", ""))
-
-tk.Label(root, text="Gain:").grid(row=2, column=2)
-entry_gain2 = tk.Entry(root)
-entry_gain2.grid(row=2, column=3)
-entry_gain2.insert(0, config.get("Cámara2", {}).get("Gain", ""))
-
-tk.Label(root, text="Width:").grid(row=3, column=2)
-entry_width2 = tk.Entry(root)
-entry_width2.grid(row=3, column=3)
-entry_width2.insert(0, config.get("Cámara2", {}).get("Width", ""))
-
-tk.Label(root, text="Height:").grid(row=4, column=2)
-entry_height2 = tk.Entry(root)
-entry_height2.grid(row=4, column=3)
-entry_height2.insert(0, config.get("Cámara2", {}).get("Height", ""))
-
-tk.Label(root, text="Pixel Format:").grid(row=5, column=2)
-entry_pixel2 = tk.Entry(root)
-entry_pixel2.grid(row=5, column=3)
-entry_pixel2.insert(0, config.get("Cámara2", {}).get("PixelFormat", ""))
-
-tk.Label(root, text="Frame Rate:").grid(row=6, column=2)
-entry_fps2 = tk.Entry(root)
-entry_fps2.grid(row=6, column=3)
-entry_fps2.insert(0, config.get("Cámara2", {}).get("FrameRate", ""))
+    tk.Label(root, text=f"{param}:").grid(row=i+1, column=2, sticky="e", padx=5, pady=2)
+    entry = tk.Entry(root, width=10)
+    entry.grid(row=i+1, column=3, padx=5, pady=2)
+    entry.insert(0, config.get("Cámara2", {}).get(param.replace(" ", ""), ""))
+    entries_c2.append(entry)
 
 # Botón para guardar configuración
-tk.Button(root, text="Guardar Configuración", command=guardar_configuracion).grid(row=7, column=1, columnspan=3)
+tk.Button(root, text="Guardar Configuración", command=guardar_configuracion).grid(row=len(parametros) + 1, column=0, columnspan=4, pady=10)
+
+# Asignar entradas a variables globales
+entry_exposure1, entry_gain1, entry_width1, entry_height1, entry_pixel1, entry_fps1 = entries_c1
+entry_exposure2, entry_gain2, entry_width2, entry_height2, entry_pixel2, entry_fps2 = entries_c2
 
 # Iniciar la interfaz
 root.mainloop()
-
